@@ -43,7 +43,7 @@ class ItemProgramRun extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(width: 1), shape: BoxShape.circle),
                   child: const Icon(
-                    Icons.wine_bar_outlined,
+                    Icons.corporate_fare_rounded,
                     size: 20,
                   ),
                 ),

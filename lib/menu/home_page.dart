@@ -63,10 +63,20 @@ class _HomePageState extends State<HomePage> {
             itemCount: programsNew.length,
             itemBuilder: (_, i) {
               final x = programsNew[i];
-              return Container(
-                margin: EdgeInsets.only(
-                    right: (i == programsNew.length - 1) ? 0 : 16),
-                child: ItemNewProgram(programModel: x),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => DetailPage(
+                                programModel: x,
+                              )));
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      right: (i == programsNew.length - 1) ? 0 : 16),
+                  child: ItemNewProgram(programModel: x),
+                ),
               );
             }),
       );
@@ -141,11 +151,21 @@ class _HomePageState extends State<HomePage> {
                   itemCount: programsCurrent.length,
                   itemBuilder: (_, i) {
                     final x = programsCurrent[i];
-                    return Container(
-                      margin: EdgeInsets.only(
-                          right: (i == programsCurrent.length - 1) ? 0 : 16),
-                      child: ItemProgramRun(
-                        programModel: x,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DetailPage(
+                                      programModel: x,
+                                    )));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            right: (i == programsCurrent.length - 1) ? 0 : 16),
+                        child: ItemProgramRun(
+                          programModel: x,
+                        ),
                       ),
                     );
                   }),
