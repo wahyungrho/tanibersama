@@ -17,18 +17,10 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  getPreference() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    login = sharedPreferences.getBool(PrefProfile.login) ?? false;
-    print("Status login $login ");
-    setState(() {});
-    getPrograms();
-  }
-
   @override
   void initState() {
     super.initState();
-    getPreference();
+    getPrograms();
   }
 
   @override
@@ -79,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (_) => DetailPage(
                                 programModel: x,
-                                login: login,
                               )));
                 },
                 child: Container(
@@ -168,7 +159,6 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                                 builder: (_) => DetailPage(
                                       programModel: x,
-                                      login: login,
                                     )));
                       },
                       child: Container(

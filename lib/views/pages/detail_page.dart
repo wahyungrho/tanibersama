@@ -1,9 +1,8 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
-  final bool? login;
   final ProgramModel? programModel;
-  const DetailPage({Key? key, this.programModel, this.login}) : super(key: key);
+  const DetailPage({Key? key, this.programModel}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -11,9 +10,18 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   int unit = 1;
+  bool? login;
   var refundTotal = 0.0;
   int refundValues = 0;
   String? contractDuration;
+
+  getPreference() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    login = sharedPreferences.getBool(PrefProfile.login) ?? false;
+    print("Status login $login ");
+    setState(() {});
+    defaultValuesSimulation('default');
+  }
 
   void defaultValuesSimulation(String tipe) {
     if (tipe == "default") {
@@ -66,7 +74,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    defaultValuesSimulation('default');
+    getPreference();
   }
 
   @override
@@ -470,11 +478,16 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      if (widget.login == false) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => SignInPage()));
+                      if (login == false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => SignInPage(
+                                      currentPage: 'detail',
+                                      method: getPreference,
+                                    )));
                       } else {
-                        print("Status login ${widget.login} ");
+                        print("Status login $login ");
                       }
                     },
                     height: 50,

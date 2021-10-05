@@ -6,6 +6,7 @@ class PinAuthPage extends StatefulWidget {
   final String? email;
   final String? phone;
   final String? password;
+  final VoidCallback? method;
   const PinAuthPage({
     Key? key,
     this.currentPage,
@@ -13,6 +14,7 @@ class PinAuthPage extends StatefulWidget {
     this.email,
     this.phone,
     this.password,
+    this.method,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,13 @@ class _PinAuthPageState extends State<PinAuthPage> {
   String currentText = '';
   AuthServices authServices = AuthServices();
   TextEditingController pinController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    print("Current Page : ${widget.currentPage}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,25 +140,7 @@ class _PinAuthPageState extends State<PinAuthPage> {
               ),
               MaterialButton(
                 onPressed: () async {
-                  if (widget.currentPage == 'login') {
-                    UserModel? userModel = await authServices.signin(
-                        widget.email, widget.password, pinController.text);
-                    if (userModel == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          'Maaf, email atau password tidak sesuai !',
-                          style: mediumFontStyle.copyWith(
-                              color: blackColor.withOpacity(0.8)),
-                        ),
-                        backgroundColor: Colors.amber[400],
-                      ));
-                    } else {
-                      successShowDialog(
-                          "Login Berhasil !",
-                          "Semangat membantu mengembangkan hasil panen petani dan peternak Indonesia",
-                          widget.currentPage.toString());
-                    }
-                  } else if (widget.currentPage == 'register') {
+                  if (widget.currentPage == 'register') {
                     UserModel? userModel = await authServices.signup(
                         widget.fullName,
                         widget.email,
@@ -168,6 +159,24 @@ class _PinAuthPageState extends State<PinAuthPage> {
                     } else {
                       successShowDialog(
                           "Registrasi Berhasil !",
+                          "Semangat membantu mengembangkan hasil panen petani dan peternak Indonesia",
+                          widget.currentPage.toString());
+                    }
+                  } else {
+                    UserModel? userModel = await authServices.signin(
+                        widget.email, widget.password, pinController.text);
+                    if (userModel == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                          'Maaf, email atau password tidak sesuai !',
+                          style: mediumFontStyle.copyWith(
+                              color: blackColor.withOpacity(0.8)),
+                        ),
+                        backgroundColor: Colors.amber[400],
+                      ));
+                    } else {
+                      successShowDialog(
+                          "Login Berhasil !",
                           "Semangat membantu mengembangkan hasil panen petani dan peternak Indonesia",
                           widget.currentPage.toString());
                     }
@@ -213,10 +222,17 @@ class _PinAuthPageState extends State<PinAuthPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const MainPage()),
-                      (route) => false);
+                  if (currentPage == 'detail') {
+                    widget.method!();
+                    for (var i = 0; i < 3; i++) {
+                      Navigator.pop(context);
+                    }
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MainPage()),
+                        (route) => false);
+                  }
                 },
               ),
             ],

@@ -1,9 +1,9 @@
 part of 'pages.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({
-    Key? key,
-  }) : super(key: key);
+  final String? currentPage;
+  final VoidCallback? method;
+  const SignInPage({Key? key, this.currentPage, this.method}) : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -98,14 +98,27 @@ class _SignInPageState extends State<SignInPage> {
                     backgroundColor: Colors.amber[400],
                   ));
                 } else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PinAuthPage(
-                                currentPage: "login",
-                                email: emailController.text,
-                                password: passwordController.text,
-                              )));
+                  if (widget.currentPage == 'detail') {
+                    print(widget.method.toString());
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PinAuthPage(
+                                  currentPage: widget.currentPage,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  method: widget.method,
+                                )));
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PinAuthPage(
+                                  currentPage: "login",
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                )));
+                  }
                 }
               },
               height: 50,
