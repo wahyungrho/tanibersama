@@ -78,18 +78,35 @@ class _SignInPageState extends State<SignInPage> {
             ),
             MaterialButton(
               onPressed: () {
-                if (emailController.text.isNotEmpty ||
-                    passwordController.text.isNotEmpty) {
-                  setState(() {});
+                if (emailController.text.isEmpty ||
+                    passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      'Maaf, mohon lengkapi form login !',
+                      style: mediumFontStyle.copyWith(
+                          color: blackColor.withOpacity(0.8)),
+                    ),
+                    backgroundColor: Colors.amber[400],
+                  ));
+                } else if (passwordController.text.length < 8) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      'Maaf, password min 8 karakter',
+                      style: mediumFontStyle.copyWith(
+                          color: blackColor.withOpacity(0.8)),
+                    ),
+                    backgroundColor: Colors.amber[400],
+                  ));
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PinAuthPage(
+                                currentPage: "login",
+                                email: emailController.text,
+                                password: passwordController.text,
+                              )));
                 }
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PinAuthPage(
-                              currentPage: "login",
-                              email: emailController.text,
-                              password: passwordController.text,
-                            )));
               },
               height: 50,
               elevation: 0,

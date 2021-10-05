@@ -1,9 +1,9 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
-  final String? id;
+  final bool? login;
   final ProgramModel? programModel;
-  const DetailPage({Key? key, this.programModel, this.id}) : super(key: key);
+  const DetailPage({Key? key, this.programModel, this.login}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -470,11 +470,11 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      if (widget.id == "null") {
+                      if (widget.login == false) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => SignInPage()));
                       } else {
-                        print(widget.id);
+                        print("Status login ${widget.login} ");
                       }
                     },
                     height: 50,

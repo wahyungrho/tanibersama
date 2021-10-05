@@ -132,6 +132,23 @@ class _PinAuthPageState extends State<PinAuthPage> {
               MaterialButton(
                 onPressed: () async {
                   if (widget.currentPage == 'login') {
+                    UserModel? userModel = await authServices.signin(
+                        widget.email, widget.password, pinController.text);
+                    if (userModel == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                          'Maaf, email atau password tidak sesuai !',
+                          style: mediumFontStyle.copyWith(
+                              color: blackColor.withOpacity(0.8)),
+                        ),
+                        backgroundColor: Colors.amber[400],
+                      ));
+                    } else {
+                      successShowDialog(
+                          "Login Berhasil !",
+                          "Semangat membantu mengembangkan hasil panen petani dan peternak Indonesia",
+                          widget.currentPage.toString());
+                    }
                   } else if (widget.currentPage == 'register') {
                     UserModel? userModel = await authServices.signup(
                         widget.fullName,
@@ -149,10 +166,10 @@ class _PinAuthPageState extends State<PinAuthPage> {
                         backgroundColor: Colors.amber[400],
                       ));
                     } else {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => const MainPage()),
-                          (route) => false);
+                      successShowDialog(
+                          "Registrasi Berhasil !",
+                          "Semangat membantu mengembangkan hasil panen petani dan peternak Indonesia",
+                          widget.currentPage.toString());
                     }
                   }
                 },
@@ -174,5 +191,36 @@ class _PinAuthPageState extends State<PinAuthPage> {
         ],
       ),
     );
+  }
+
+  successShowDialog(String title, String subtitle, String currentPage) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(
+              subtitle,
+              textAlign: TextAlign.justify,
+            ),
+            actions: <Widget>[
+              TextButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(greenColor)),
+                child: const Text(
+                  'Oke',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MainPage()),
+                      (route) => false);
+                },
+              ),
+            ],
+          );
+        });
   }
 }

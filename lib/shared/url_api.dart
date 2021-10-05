@@ -6,4 +6,5 @@ class BaseURL {
       'http://$ipAddress/api_invest/api/api_get_program.php';
   static String apiImage = 'http://$ipAddress/api_invest/assets';
   static String apiSignUp = 'http://$ipAddress/api_invest/api/sign_up.php';
+  static String apiSignIn = 'http://$ipAddress/api_invest/api/sign_in.php';
 }

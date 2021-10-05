@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<ProgramModel> programs = [];
-  String id = '';
+  bool? login;
 
   final ProgramServices _programServices = ProgramServices();
   getPrograms() async {
@@ -19,8 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   getPreference() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    id = sharedPreferences.getString(PrefProfile.idUSer).toString();
-
+    login = sharedPreferences.getBool(PrefProfile.login) ?? false;
+    print("Status login $login ");
     setState(() {});
     getPrograms();
   }
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (_) => DetailPage(
                                 programModel: x,
-                                id: id,
+                                login: login,
                               )));
                 },
                 child: Container(
@@ -168,6 +168,7 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                                 builder: (_) => DetailPage(
                                       programModel: x,
+                                      login: login,
                                     )));
                       },
                       child: Container(

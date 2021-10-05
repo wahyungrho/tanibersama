@@ -18,6 +18,19 @@ class _ProfilePageState extends State<ProfilePage> {
     ['Bantuan', 'Bantuan dan masukan', Icons.help_outline, Colors.blue[400]],
     ['Logout', 'Keluar dari aplikasi', Icons.exit_to_app, Colors.black],
   ];
+
+  Future removePreference() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove(PrefProfile.idUSer);
+    sharedPreferences.remove(PrefProfile.name);
+    sharedPreferences.remove(PrefProfile.email);
+    sharedPreferences.remove(PrefProfile.phone);
+    sharedPreferences.remove(PrefProfile.pin);
+    sharedPreferences.remove(PrefProfile.createdAt);
+    sharedPreferences.remove(PrefProfile.login);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListTile(
       onTap: () {
         if (title == 'Logout') {
-          // showLogoutDealog();
+          showLogoutDealog();
         }
       },
       subtitle: Text(subtitle),
@@ -115,5 +128,40 @@ class _ProfilePageState extends State<ProfilePage> {
         color: Colors.grey.shade400,
       ),
     );
+  }
+
+  showLogoutDealog() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Logout'),
+            content: const Text('Are you sure you want to logout?'),
+            actions: <Widget>[
+              TextButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(greenColor)),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child:
+                    const Text('Logout', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  removePreference();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MainPage()),
+                      (route) => false);
+                },
+              ),
+            ],
+          );
+        });
   }
 }
