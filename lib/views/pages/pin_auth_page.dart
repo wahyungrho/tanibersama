@@ -31,8 +31,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
   @override
   void initState() {
     super.initState();
-    print("Current Page : ${widget.currentPage}");
-    print("Selected Index Page : ${widget.selectedIndex}");
   }
 
   @override
@@ -132,7 +130,6 @@ class _PinAuthPageState extends State<PinAuthPage> {
                 ),
                 length: 6,
                 onChanged: (value) {
-                  print(value);
                   setState(() {
                     currentText = value;
                   });

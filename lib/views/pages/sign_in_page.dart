@@ -102,7 +102,6 @@ class _SignInPageState extends State<SignInPage> {
                   ));
                 } else {
                   if (widget.currentPage == 'detail') {
-                    print(widget.method.toString());
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -217,7 +216,7 @@ class _SignInPageState extends State<SignInPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()));
+                                builder: (context) => const SignUpPage()));
                       },
                       child: Text(
                         "Daftar Sekarang",

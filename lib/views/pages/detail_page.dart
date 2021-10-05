@@ -18,7 +18,6 @@ class _DetailPageState extends State<DetailPage> {
   getPreference() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
-    print("Status login $login ");
     setState(() {});
     defaultValuesSimulation('default');
   }
@@ -486,9 +485,7 @@ class _DetailPageState extends State<DetailPage> {
                                       currentPage: 'detail',
                                       method: getPreference,
                                     )));
-                      } else {
-                        print("Status login $login ");
-                      }
+                      } else {}
                     },
                     height: 50,
                     elevation: 0,

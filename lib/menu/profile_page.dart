@@ -12,7 +12,6 @@ class _ProfilePageState extends State<ProfilePage> {
   getPreference() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
-    print("Status login $login ");
     setState(() {});
   }
 
