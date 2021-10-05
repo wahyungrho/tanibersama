@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<ProgramModel> programs = [];
+  String id = '';
 
   final ProgramServices _programServices = ProgramServices();
   getPrograms() async {
@@ -16,10 +17,18 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  getPreference() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    id = sharedPreferences.getString(PrefProfile.idUSer).toString();
+
+    setState(() {});
+    getPrograms();
+  }
+
   @override
   void initState() {
     super.initState();
-    getPrograms();
+    getPreference();
   }
 
   @override
@@ -70,6 +79,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (_) => DetailPage(
                                 programModel: x,
+                                id: id,
                               )));
                 },
                 child: Container(
@@ -92,7 +102,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const Text(
-                'Hallo, Wahyu Nugroho',
+                'Hallo, Selamat Datang',
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
@@ -104,7 +114,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Ayo Bantu Petani Kita',
+                  'Ayo Bantu Petani Kita !',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,

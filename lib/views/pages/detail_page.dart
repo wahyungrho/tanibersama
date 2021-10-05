@@ -1,8 +1,9 @@
 part of 'pages.dart';
 
 class DetailPage extends StatefulWidget {
+  final String? id;
   final ProgramModel? programModel;
-  const DetailPage({Key? key, this.programModel}) : super(key: key);
+  const DetailPage({Key? key, this.programModel, this.id}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -469,7 +470,12 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      if (widget.id == "null") {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SignInPage()));
+                      } else {
+                        print(widget.id);
+                      }
                     },
                     height: 50,
                     elevation: 0,
@@ -479,7 +485,7 @@ class _DetailPageState extends State<DetailPage> {
                     color: greenColor,
                     child: const Center(
                       child: Text(
-                        "Investasi sekarang",
+                        "Investasi Sekarang",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
