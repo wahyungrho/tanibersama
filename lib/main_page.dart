@@ -3,17 +3,18 @@ import 'package:invest_agriculture/menu/menu.dart';
 import 'package:invest_agriculture/shared/shared.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final int? selectedIndex;
+  const MainPage({Key? key, this.selectedIndex}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int selectedIndex = 0;
+  int? selectedIndex = 0;
   static const List<Widget> widgetOptions = [
     HomePage(),
-    Text('Index 1: Business'),
+    PorfolioPage(),
     ProfilePage(),
   ];
 
@@ -24,10 +25,20 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.selectedIndex == null) {
+      selectedIndex = 0;
+    } else {
+      selectedIndex = widget.selectedIndex;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: widgetOptions.elementAt(selectedIndex),
+        child: widgetOptions.elementAt(selectedIndex!),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -36,7 +47,7 @@ class _MainPageState extends State<MainPage> {
               icon: Icon(Icons.file_present_sharp), label: 'Portfolio'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        currentIndex: selectedIndex,
+        currentIndex: selectedIndex!,
         selectedItemColor: blackColor.withOpacity(0.6),
         unselectedItemColor: greyColor,
         onTap: _ontapItem,

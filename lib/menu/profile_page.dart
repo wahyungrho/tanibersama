@@ -8,6 +8,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool? login;
+  getPreference() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    login = sharedPreferences.getBool(PrefProfile.login) ?? false;
+    print("Status login $login ");
+    setState(() {});
+  }
+
   final List<List> _settings = [
     [
       'Informasi Akun',
@@ -32,70 +40,119 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getPreference();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          "Profil saya",
-          style: TextStyle(color: blackColor),
-        ),
+        title: (login == true)
+            ? Text(
+                "Profil saya",
+                style: TextStyle(color: blackColor),
+              )
+            : const SizedBox(),
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                // CircleAvatar(
-                //   radius: 50,
-                //   backgroundColor: Colors.grey[200],
-                //   backgroundImage: const NetworkImage(
-                //       'https://randomuser.me/api/portraits/women/11.jpg'),
-                // ),
-                // const SizedBox(
-                //   width: 20,
-                // ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Eduardo Hernandez',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Berkeley, California",
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
-                    ),
-                  ],
+      body: (login == true)
+          ? ListView(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      // CircleAvatar(
+                      //   radius: 50,
+                      //   backgroundColor: Colors.grey[200],
+                      //   backgroundImage: const NetworkImage(
+                      //       'https://randomuser.me/api/portraits/women/11.jpg'),
+                      // ),
+                      // const SizedBox(
+                      //   width: 20,
+                      // ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Eduardo Hernandez',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Berkeley, California",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 500,
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _settings.length,
+                      itemBuilder: (context, index) {
+                        return settingsOption(
+                            _settings[index][0],
+                            _settings[index][1],
+                            _settings[index][2],
+                            _settings[index][3]);
+                      }),
                 ),
               ],
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  WidgetIlustration(
+                    image: "assets/auth_ilustration.png",
+                    title: "Oops, login dulu yuk.",
+                    subtitle1:
+                        "Halaman ini memerlukan akses dari profile kamu,",
+                    subtitle2: "silahkan login terlebih dahulu.",
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: MaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const SignInPage(
+                                        currentPage: 'login',
+                                        selectedIndex: 2,
+                                      )));
+                        },
+                        height: 50,
+                        elevation: 0,
+                        splashColor: Colors.yellow[700],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        color: greenColor,
+                        child: const Center(
+                          child: Text(
+                            "Login Sekarang",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            height: 500,
-            child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _settings.length,
-                itemBuilder: (context, index) {
-                  return settingsOption(
-                      _settings[index][0],
-                      _settings[index][1],
-                      _settings[index][2],
-                      _settings[index][3]);
-                }),
-          ),
-        ],
-      ),
     );
   }
 

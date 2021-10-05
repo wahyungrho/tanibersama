@@ -2,8 +2,11 @@ part of 'pages.dart';
 
 class SignInPage extends StatefulWidget {
   final String? currentPage;
+  final int? selectedIndex;
   final VoidCallback? method;
-  const SignInPage({Key? key, this.currentPage, this.method}) : super(key: key);
+  const SignInPage(
+      {Key? key, this.currentPage, this.selectedIndex, this.method})
+      : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -117,6 +120,7 @@ class _SignInPageState extends State<SignInPage> {
                                   currentPage: "login",
                                   email: emailController.text,
                                   password: passwordController.text,
+                                  selectedIndex: widget.selectedIndex,
                                 )));
                   }
                 }

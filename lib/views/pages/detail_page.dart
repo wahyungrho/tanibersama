@@ -499,7 +499,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: const Center(
                       child: Text(
                         "Investasi Sekarang",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   )

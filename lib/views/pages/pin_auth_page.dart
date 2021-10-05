@@ -7,6 +7,7 @@ class PinAuthPage extends StatefulWidget {
   final String? phone;
   final String? password;
   final VoidCallback? method;
+  final int? selectedIndex;
   const PinAuthPage({
     Key? key,
     this.currentPage,
@@ -15,6 +16,7 @@ class PinAuthPage extends StatefulWidget {
     this.phone,
     this.password,
     this.method,
+    this.selectedIndex,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class _PinAuthPageState extends State<PinAuthPage> {
   void initState() {
     super.initState();
     print("Current Page : ${widget.currentPage}");
+    print("Selected Index Page : ${widget.selectedIndex}");
   }
 
   @override
@@ -228,10 +231,20 @@ class _PinAuthPageState extends State<PinAuthPage> {
                       Navigator.pop(context);
                     }
                   } else {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MainPage()),
-                        (route) => false);
+                    if (widget.selectedIndex != null) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MainPage(
+                                    selectedIndex: widget.selectedIndex,
+                                  )),
+                          (route) => false);
+                    } else {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MainPage()),
+                          (route) => false);
+                    }
                   }
                 },
               ),

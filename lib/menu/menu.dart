@@ -9,3 +9,4 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'home_page.dart';
 part 'profile_page.dart';
+part 'portfolio_page.dart';
