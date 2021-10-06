@@ -7,6 +7,8 @@ class UserModel {
   final String? phone;
   final String? password;
   final String? pin;
+  final String? totalPendanaan;
+  final String? totalMargin;
   final String? status;
   final String? createdAt;
 
@@ -17,6 +19,8 @@ class UserModel {
       this.phone,
       this.password,
       this.pin,
+      this.totalPendanaan,
+      this.totalMargin,
       this.status,
       this.createdAt});
 
@@ -27,6 +31,8 @@ class UserModel {
       email: json['email'],
       phone: json['phone'],
       pin: json['pin'],
+      totalPendanaan: json['total_pendanaan'],
+      totalMargin: json['total_margin'],
       status: json['status'],
       createdAt: json['created_at'],
     );

@@ -9,9 +9,19 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool? login;
+  String? id = '';
+  List<UserModel> listUser = [];
+  AuthServices authServices = AuthServices();
   getPreference() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    id = sharedPreferences.getString(PrefProfile.idUSer);
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
+    setState(() {});
+    getUser();
+  }
+
+  getUser() async {
+    listUser = await authServices.getUser(id!);
     setState(() {});
   }
 
@@ -59,58 +69,63 @@ class _ProfilePageState extends State<ProfilePage> {
             : const SizedBox(),
       ),
       body: (login == true)
-          ? ListView(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      // CircleAvatar(
-                      //   radius: 50,
-                      //   backgroundColor: Colors.grey[200],
-                      //   backgroundImage: const NetworkImage(
-                      //       'https://randomuser.me/api/portraits/women/11.jpg'),
-                      // ),
-                      // const SizedBox(
-                      //   width: 20,
-                      // ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Eduardo Hernandez',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Berkeley, California",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ? ListView.builder(
+              itemCount: listUser.length,
+              itemBuilder: (_, i) {
+                final x = listUser[i];
+                return Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          // CircleAvatar(
+                          //   radius: 50,
+                          //   backgroundColor: Colors.grey[200],
+                          //   backgroundImage: const NetworkImage(
+                          //       'https://randomuser.me/api/portraits/women/11.jpg'),
+                          // ),
+                          // const SizedBox(
+                          //   width: 20,
+                          // ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${x.fullName}',
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "${x.email}",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 500,
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _settings.length,
-                      itemBuilder: (context, index) {
-                        return settingsOption(
-                            _settings[index][0],
-                            _settings[index][1],
-                            _settings[index][2],
-                            _settings[index][3]);
-                      }),
-                ),
-              ],
+                    ),
+                    SizedBox(
+                      height: 500,
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _settings.length,
+                          itemBuilder: (context, index) {
+                            return settingsOption(
+                                _settings[index][0],
+                                _settings[index][1],
+                                _settings[index][2],
+                                _settings[index][3],
+                                x);
+                          }),
+                    )
+                  ],
+                );
+              },
             )
           : Center(
               child: Column(
@@ -155,11 +170,19 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  settingsOption(String title, String subtitle, IconData icon, Color color) {
+  settingsOption(String title, String subtitle, IconData icon, Color color,
+      UserModel userModel) {
     return ListTile(
       onTap: () {
         if (title == 'Logout') {
           showLogoutDealog();
+        } else if (title == 'Informasi Akun') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => DetailAccount(
+                        userModel: userModel,
+                      )));
         }
       },
       subtitle: Text(subtitle),

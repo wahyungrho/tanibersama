@@ -8,6 +8,8 @@ class BaseURL {
   static String apiImage = 'http://$ipAddress/api_invest/assets';
   static String apiSignUp = 'http://$ipAddress/api_invest/api/sign_up.php';
   static String apiSignIn = 'http://$ipAddress/api_invest/api/sign_in.php';
+  static String apiGetUser =
+      'http://$ipAddress/api_invest/api/get_profile.php?id_user=';
 
   // Production
   // static String ipAddress = 'kangsayuronline.tanibersama.com';

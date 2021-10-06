@@ -77,4 +77,28 @@ class AuthServices {
       return null;
     }
   }
+
+  Future<List<UserModel>> getUser(String id) async {
+    try {
+      var response = await http.get(Uri.parse(BaseURL.apiGetUser + id));
+      print(response.statusCode);
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        List<UserModel> users = [];
+        List parseJson = jsonDecode(response.body);
+
+        for (var user in parseJson) {
+          users.add(UserModel.fromJson(user));
+        }
+
+        return users;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }
