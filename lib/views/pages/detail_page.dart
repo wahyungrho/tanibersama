@@ -15,13 +15,6 @@ class _DetailPageState extends State<DetailPage> {
   int refundValues = 0;
   String? contractDuration;
 
-  getPreference() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    login = sharedPreferences.getBool(PrefProfile.login) ?? false;
-    setState(() {});
-    defaultValuesSimulation('default');
-  }
-
   void defaultValuesSimulation(String tipe) {
     if (tipe == "default") {
       refundValues = int.parse("${widget.programModel!.price}");
@@ -73,7 +66,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    getPreference();
+    defaultValuesSimulation('default');
   }
 
   @override
@@ -475,31 +468,34 @@ class _DetailPageState extends State<DetailPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      if (login == false) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => SignInPage(
-                                      currentPage: 'detail',
-                                      method: getPreference,
-                                    )));
-                      } else {}
-                    },
-                    height: 50,
-                    elevation: 0,
-                    splashColor: Colors.yellow[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    color: greenColor,
-                    child: const Center(
-                      child: Text(
-                        "Investasi Sekarang",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  )
+                  (widget.programModel!.status) == '0'
+                      ? MaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => DetailInvest(
+                                          programModel: widget.programModel,
+                                          unit: unit,
+                                          pendanaan: refundValues,
+                                          totalRefund: refundTotal.toInt(),
+                                        )));
+                          },
+                          height: 50,
+                          elevation: 0,
+                          splashColor: Colors.yellow[700],
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          color: greenColor,
+                          child: const Center(
+                            child: Text(
+                              "Checkout",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        )
+                      : const SizedBox()
                 ],
               ))
         ])),

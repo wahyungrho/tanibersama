@@ -15,7 +15,7 @@ class AuthServices {
       var body = {
         'fullname': name,
         'email': email,
-        'phone': email,
+        'phone': phone,
         'password': password,
         'pin': pin,
       };
