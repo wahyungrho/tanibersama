@@ -19,9 +19,12 @@ class DetailInvest extends StatefulWidget {
 
 class _DetailInvestState extends State<DetailInvest> {
   bool? login = false;
+  String? id = '';
+  CheckoutServices checkoutServices = CheckoutServices();
   getPreference() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
+    id = sharedPreferences.getString(PrefProfile.idUSer);
     setState(() {});
   }
 
@@ -240,22 +243,43 @@ class _DetailInvestState extends State<DetailInvest> {
                                 'Lanjut',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              onPressed: () {
-                                const AndroidInitializationSettings(
-                                    '@mipmap/ic_launcher');
-                                NotificationAPI.showNotification(
-                                  title: 'Proses Investasi Berhasil',
-                                  body:
-                                      'Mohon untuk melakukan pembayaran sesuai dengan pengajuan pendanaan...',
-                                  payload: 'Silahkan lakukan pembayaran',
-                                );
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => OrderSuccess(
-                                              totalTransfer: widget.pendanaan!
-                                                  .toStringAsFixed(0),
-                                            )));
+                              onPressed: () async {
+                                String? value = await checkoutServices.checkout(
+                                    id!,
+                                    widget.programModel!.idProgram,
+                                    widget.programModel!.idBorrower,
+                                    widget.unit.toString(),
+                                    totalMargin.toString(),
+                                    widget.pendanaan.toString());
+
+                                if (value != "1") {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      "Terjadi kesalahan, mohon coba beberapa saat lagi!",
+                                      style: mediumFontStyle.copyWith(
+                                          color: blackColor.withOpacity(0.8)),
+                                    ),
+                                    backgroundColor: Colors.amber[400],
+                                  ));
+                                } else {
+                                  const AndroidInitializationSettings(
+                                      '@mipmap/ic_launcher');
+                                  NotificationAPI.showNotification(
+                                    title: 'Proses Investasi Berhasil',
+                                    body:
+                                        'Mohon untuk melakukan pembayaran sesuai dengan pengajuan pendanaan...',
+                                    payload: 'Silahkan lakukan pembayaran',
+                                  );
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => OrderSuccess(
+                                                totalTransfer: widget.pendanaan!
+                                                    .toStringAsFixed(0),
+                                              )));
+                                }
+                                //
                               },
                             ),
                           ],

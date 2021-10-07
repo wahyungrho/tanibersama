@@ -46,10 +46,22 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   void incrementUnit() {
-    setState(() {
-      unit++;
-      defaultValuesSimulation('add');
-    });
+    if (unit < int.parse("${widget.programModel!.unitAvailable}")) {
+      setState(() {
+        unit++;
+        defaultValuesSimulation('add');
+      });
+    } else {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            'Maaf, tidak dapat menambahkan lebih dari unit yang tersedia !',
+            style: mediumFontStyle.copyWith(color: blackColor.withOpacity(0.8)),
+          ),
+          backgroundColor: Colors.amber[400],
+        ));
+      });
+    }
   }
 
   void decrementUnit() {
