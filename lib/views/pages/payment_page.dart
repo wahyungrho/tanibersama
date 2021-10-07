@@ -227,6 +227,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
   @override
   void initState() {
     super.initState();
+
     Timer(const Duration(milliseconds: 4000), () {
       Navigator.pushReplacement(
           context,

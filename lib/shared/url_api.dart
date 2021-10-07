@@ -2,7 +2,7 @@ part of 'shared.dart';
 
 class BaseURL {
   // Development
-  static String ipAddress = '192.168.43.30';
+  static String ipAddress = '192.168.18.181';
   static String apiGetProgram =
       'http://$ipAddress/api_invest/api/api_get_program.php';
   static String apiImage = 'http://$ipAddress/api_invest/assets';

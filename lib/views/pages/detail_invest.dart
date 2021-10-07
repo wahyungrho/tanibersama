@@ -241,6 +241,14 @@ class _DetailInvestState extends State<DetailInvest> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onPressed: () {
+                                const AndroidInitializationSettings(
+                                    '@mipmap/ic_launcher');
+                                NotificationAPI.showNotification(
+                                  title: 'Proses Investasi Berhasil',
+                                  body:
+                                      'Mohon untuk melakukan pembayaran sesuai dengan pengajuan pendanaan...',
+                                  payload: 'Silahkan lakukan pembayaran',
+                                );
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
