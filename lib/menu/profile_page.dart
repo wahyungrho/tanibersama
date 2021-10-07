@@ -101,8 +101,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               Text(
                                 "${x.email}",
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 14),
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 14),
                               ),
                             ],
                           ),

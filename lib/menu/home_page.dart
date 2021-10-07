@@ -25,36 +25,51 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget newInvestWidget() => Row(
-          children: [
-            Text(
-              'Pendanaan Terbaru',
-              style: boldFontStyle.copyWith(fontSize: 18),
+    Widget newInvestWidget(List<ProgramModel> programsNew) {
+      return Row(
+        children: [
+          Text(
+            'Pendanaan Terbaru',
+            style: boldFontStyle.copyWith(fontSize: 18),
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Container(
+            width: 35,
+            height: 15,
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(4),
             ),
-            const SizedBox(
-              width: 12,
-            ),
-            Container(
-              width: 35,
-              height: 15,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(4),
+            child: Center(
+              child: Text(
+                "NEW",
+                style:
+                    mediumFontStyle.copyWith(fontSize: 11, color: Colors.white),
               ),
-              child: Center(
-                child: Text(
-                  "NEW",
-                  style: mediumFontStyle.copyWith(
-                      fontSize: 11, color: Colors.white),
-                ),
-              ),
             ),
-          ],
-        );
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => KatalogAllProgram(
+                          programModel: programsNew,
+                          title: 'Pendanaan Terbaru')));
+            },
+            child: Text(
+              'Lihat Semua',
+              style: regulerFontStyle.copyWith(color: greenColor),
+            ),
+          ),
+        ],
+      );
+    }
 
-    Widget itemNewInvestment() {
-      var programsNew =
-          programs.where((element) => element.status == "0").toList();
+    Widget itemNewInvestment(List<ProgramModel> programsNew) {
       return AspectRatio(
         aspectRatio: 3.72 / 3,
         child: ListView.builder(
@@ -83,51 +98,55 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    Widget headerHome() => Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          padding: EdgeInsets.all(defaultMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Text(
-                'Hallo, Selamat Datang',
+    Widget headerHome() {
+      var programsNew =
+          programs.where((element) => element.status == "0").toList();
+      return Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        padding: EdgeInsets.all(defaultMargin),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Hallo, Selamat Datang',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Ayo Bantu Petani Kita !',
                 style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 18,
-                ),
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis),
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                child: Text(
-                  'Ayo Bantu Petani Kita !',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 20,
-              ),
-              newInvestWidget(),
-              const SizedBox(
-                height: 20,
-              ),
-              itemNewInvestment(),
-            ],
-          ),
-        );
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            newInvestWidget(programsNew),
+            const SizedBox(
+              height: 20,
+            ),
+            itemNewInvestment(programsNew),
+          ],
+        ),
+      );
+    }
 
     Widget itemCurrentProgram() {
       var programsCurrent =
@@ -139,9 +158,28 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Pendanaan Berjalan',
-              style: boldFontStyle.copyWith(fontSize: 18),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Pendanaan Berjalan',
+                  style: boldFontStyle.copyWith(fontSize: 18),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => KatalogAllProgram(
+                                programModel: programsCurrent,
+                                title: 'Pendanaan Berjalan')));
+                  },
+                  child: Text(
+                    'Lihat Semua',
+                    style: regulerFontStyle.copyWith(color: greenColor),
+                  ),
+                ),
+              ],
             ),
             AspectRatio(
               aspectRatio: 4 / 3,

@@ -216,7 +216,44 @@ class _DetailInvestState extends State<DetailInvest> {
                                 currentPage: 'detail',
                                 method: getPreference,
                               )));
-                } else {}
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Konfirmasi Pemesanan ...'),
+                          content: const Text(
+                              'Apakah kamu yakin untuk melanjutkan pemesanan ?'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Batal',
+                                  style: TextStyle(color: Colors.red)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(greenColor)),
+                              child: const Text(
+                                'Lanjut',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => OrderSuccess(
+                                              totalTransfer: widget.pendanaan!
+                                                  .toStringAsFixed(0),
+                                            )));
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                }
               },
               height: 50,
               elevation: 0,
