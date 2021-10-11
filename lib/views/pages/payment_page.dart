@@ -192,12 +192,13 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MainPage(
+                                builder: (_) => const MainPage(
                                       selectedIndex: 0,
-                                    )));
+                                    )),
+                            (route) => false);
                       },
                       child: Text(
                         "Kembali ke Halaman Utama",
