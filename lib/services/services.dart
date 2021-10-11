@@ -9,3 +9,4 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'program_service.dart';
 part 'auth_services.dart';
 part 'chekout_services.dart';
+part 'portfolio_services.dart';
