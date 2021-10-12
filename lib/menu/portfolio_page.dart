@@ -332,7 +332,15 @@ class _PorfolioPageState extends State<PorfolioPage> {
                                           margin: EdgeInsets.only(
                                               top: defaultMargin),
                                           child: MaterialButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          ConfirmPaymentPage(
+                                                            portfolioModel: x,
+                                                          )));
+                                            },
                                             height: 45,
                                             elevation: 0,
                                             splashColor: Colors.yellow[700],

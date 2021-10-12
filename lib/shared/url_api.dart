@@ -2,7 +2,7 @@ part of 'shared.dart';
 
 class BaseURL {
   // Development
-  static String ipAddress = '192.168.18.181';
+  static String ipAddress = '192.168.43.30';
   static String apiGetProgram =
       'http://$ipAddress/api_invest/api/api_get_program.php';
   static String apiImage = 'http://$ipAddress/api_invest/assets';
@@ -13,6 +13,8 @@ class BaseURL {
   static String checkout = 'http://$ipAddress/api_invest/api/checkout.php';
   static String apiGetHistory =
       'http://$ipAddress/api_invest/api/api_history_order.php?id_user=';
+  static String apiConfirmPayment =
+      "http://$ipAddress/api_invest/api/confirm_payment.php";
 
   // // Production
   // static String ipAddress = 'kangsayuronline.tanibersama.com';

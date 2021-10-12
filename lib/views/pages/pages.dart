@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
@@ -18,3 +19,4 @@ part 'detail_invest.dart';
 part 'detail_account.dart';
 part 'payment_page.dart';
 part 'katalog_all_programs_page.dart';
+part 'confirm_payment_page.dart';
