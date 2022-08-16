@@ -28,41 +28,52 @@ class _HomePageState extends State<HomePage> {
     Widget newInvestWidget(List<ProgramModel> programsNew) {
       return Row(
         children: [
-          Text(
-            'Pendanaan Terbaru',
-            style: boldFontStyle.copyWith(fontSize: 18),
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          Container(
-            width: 35,
-            height: 15,
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(4),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Pendanaan Terbaru',
+                    overflow: TextOverflow.ellipsis,
+                    style: boldFontStyle.copyWith(fontSize: 18),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  width: 35,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "NEW",
+                      style: mediumFontStyle.copyWith(
+                          fontSize: 11, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Center(
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => KatalogAllProgram(
+                            programModel: programsNew,
+                            title: 'Pendanaan Terbaru')));
+              },
               child: Text(
-                "NEW",
-                style:
-                    mediumFontStyle.copyWith(fontSize: 11, color: Colors.white),
+                'Lihat Semua',
+                textAlign: TextAlign.end,
+                style: regulerFontStyle.copyWith(color: greenColor),
               ),
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => KatalogAllProgram(
-                          programModel: programsNew,
-                          title: 'Pendanaan Terbaru')));
-            },
-            child: Text(
-              'Lihat Semua',
-              style: regulerFontStyle.copyWith(color: greenColor),
             ),
           ),
         ],
@@ -154,16 +165,19 @@ class _HomePageState extends State<HomePage> {
       return Container(
         color: Colors.white,
         padding: EdgeInsets.all(defaultMargin),
-        height: 350,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Pendanaan Berjalan',
-                  style: boldFontStyle.copyWith(fontSize: 18),
+                Expanded(
+                  child: Text(
+                    'Pendanaan Berjalan',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: boldFontStyle.copyWith(fontSize: 18),
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -176,13 +190,17 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Text(
                     'Lihat Semua',
+                    textAlign: TextAlign.end,
                     style: regulerFontStyle.copyWith(color: greenColor),
                   ),
                 ),
               ],
             ),
-            AspectRatio(
-              aspectRatio: 4 / 3,
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 250,
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
@@ -200,6 +218,8 @@ class _HomePageState extends State<HomePage> {
                                     )));
                       },
                       child: Container(
+                        width: MediaQuery.of(context).size.width -
+                            (2 * defaultMargin),
                         margin: EdgeInsets.only(
                             right: (i == programsCurrent.length - 1) ? 0 : 16),
                         child: ItemProgramRun(

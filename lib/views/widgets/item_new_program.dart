@@ -15,15 +15,16 @@ class ItemNewProgram extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: double.infinity,
-              height: 150,
-              child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(8)),
-                child: Image.network(
-                  "${BaseURL.apiImage}/${programModel!.image}",
-                  fit: BoxFit.cover,
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(8)),
+                  child: Image.network(
+                    "${BaseURL.apiImage}/${programModel!.image}",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -118,7 +119,10 @@ class ItemNewProgram extends StatelessWidget {
                         ],
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),
