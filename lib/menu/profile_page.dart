@@ -17,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
     id = sharedPreferences.getString(PrefProfile.idUSer);
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
     setState(() {});
-    getUser();
+    (id == null) ? null : getUser();
   }
 
   getUser() async {

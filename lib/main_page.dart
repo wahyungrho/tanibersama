@@ -11,6 +11,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  DateTime? currentBackPressTime;
   int? selectedIndex = 0;
   static const List<Widget> widgetOptions = [
     HomePage(),
@@ -37,8 +38,11 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: widgetOptions.elementAt(selectedIndex!),
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: Center(
+          child: widgetOptions.elementAt(selectedIndex!),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -53,5 +57,22 @@ class _MainPageState extends State<MainPage> {
         onTap: _ontapItem,
       ),
     );
+  }
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Tekan sekali lagi untuk keluar !',
+          style: mediumFontStyle.copyWith(color: blackColor.withOpacity(0.8)),
+        ),
+        backgroundColor: Colors.amber[400],
+      ));
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 }

@@ -19,7 +19,7 @@ class _PorfolioPageState extends State<PorfolioPage> {
     id = sharedPreferences.getString(PrefProfile.idUSer);
     login = sharedPreferences.getBool(PrefProfile.login) ?? false;
     setState(() {});
-    getUserAndPortfolio();
+    (id == null) ? null : getUserAndPortfolio();
   }
 
   getUserAndPortfolio() async {
