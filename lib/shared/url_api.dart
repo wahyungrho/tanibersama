@@ -22,7 +22,7 @@ class BaseURL {
   // Production
   static String ipAddress = 'https://buangsampah.com/api_invest';
   static String apiGetProgram = '$ipAddress/api/api_get_program.php';
-  static String apiImage = '$ipAddress/assets/img_program';
+  static String apiImage = '$ipAddress/assets';
   static String apiSignUp = '$ipAddress/api/sign_up.php';
   static String apiSignIn = '$ipAddress/api/sign_in.php';
   static String apiGetUser = '$ipAddress/api/get_profile.php?id_user=';

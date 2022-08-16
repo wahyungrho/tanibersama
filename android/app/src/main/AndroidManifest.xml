@@ -2,7 +2,7 @@
     package="com.example.invest_agriculture">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="invest_agriculture"
+        android:label="Modal Pertanian"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
